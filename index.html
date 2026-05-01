@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WGST Senior Symposium</title>
+  <style>
+    :root {
+      --berry: #ab0c2f;
+      --berry-deep: #7d0a22;
+      --berry-soft: #f9e6eb;
+      --teal: #0076a5;
+      --teal-deep: #055d81;
+      --teal-soft: #e4f4fa;
+      --ink: #15212b;
+      --muted: #5a6773;
+      --paper: #fffdfb;
+      --panel: rgba(255, 255, 255, 0.94);
+      --line: rgba(21, 33, 43, 0.12);
+      --shadow: 0 18px 45px rgba(36, 41, 46, 0.12);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(171, 12, 47, 0.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(0, 118, 165, 0.16), transparent 28%),
+        linear-gradient(180deg, #fffaf6 0%, #f8f6f3 42%, #f1f5f7 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .shell {
+      width: min(100%, 860px);
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(171, 12, 47, 0.98), rgba(125, 10, 34, 0.96) 52%, rgba(0, 118, 165, 0.96));
+      color: white;
+      border-radius: 32px;
+      padding: 28px 22px 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -90px auto;
+      width: 220px;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .dept {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 8vw, 3.3rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy {
+      margin: 16px 0 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 34rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .meta-card {
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .meta-label {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.72);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: white;
+    }
+
+    .jump-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 0;
+    }
+
+    .jump-links a {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 999px;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .jump-primary {
+      background: white;
+      color: var(--berry);
+    }
+
+    .jump-secondary {
+      background: rgba(255, 255, 255, 0.13);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section {
+      margin-top: 22px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 22px 18px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin: 0 0 6px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .section-note {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-card {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 253, 251, 0.92));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .time {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--berry);
+    }
+
+    .timeline-title {
+      font-size: 1.08rem;
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .timeline-detail {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .search-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      padding-bottom: 14px;
+      background: linear-gradient(180deg, rgba(248, 246, 243, 0.97), rgba(248, 246, 243, 0.84), transparent);
+    }
+
+    .search-box {
+      width: 100%;
+      border: 1px solid rgba(0, 118, 165, 0.18);
+      border-radius: 18px;
+      padding: 14px 16px;
+      font: 600 1rem/1.2 "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: white;
+      box-shadow: 0 12px 30px rgba(21, 33, 43, 0.06);
+    }
+
+    .search-box:focus {
+      outline: 2px solid rgba(0, 118, 165, 0.3);
+      border-color: var(--teal);
+    }
+
+    .search-meta {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .paper-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .paper-card {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(135deg, rgba(171, 12, 47, 0.04), rgba(255, 255, 255, 0.92) 35%),
+        white;
+      padding: 16px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      box-shadow: 0 8px 18px rgba(21, 33, 43, 0.05);
+    }
+
+    .paper-card:hover,
+    .paper-card:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(171, 12, 47, 0.24);
+      box-shadow: 0 14px 28px rgba(21, 33, 43, 0.1);
+      outline: none;
+    }
+
+    .paper-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--berry);
+      margin-bottom: 10px;
+    }
+
+    .paper-author::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .paper-title {
+      margin: 0;
+      font-size: 1.14rem;
+      line-height: 1.35;
+    }
+
+    .paper-preview {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: var(--muted);
+      margin: 10px 0 0;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .empty-state {
+      display: none;
+      border: 1px dashed rgba(0, 118, 165, 0.28);
+      background: var(--teal-soft);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: var(--teal-deep);
+      line-height: 1.55;
+    }
+
+    .modal[hidden] {
+      display: none;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(21, 33, 43, 0.55);
+      padding: 14px;
+      display: grid;
+      align-items: end;
+    }
+
+    .modal-card {
+      background: #fffdfa;
+      border-radius: 26px 26px 0 0;
+      max-height: min(86vh, 760px);
+      overflow: auto;
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.22);
+      padding: 18px 18px 24px;
+    }
+
+    .modal-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-kicker {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin: 0 0 6px;
+    }
+
+    .modal h3 {
+      margin: 0;
+      font-size: 1.5rem;
+      line-height: 1.15;
+    }
+
+    .modal-author {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      margin-top: 10px;
+      color: var(--berry);
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .close-btn {
+      border: 0;
+      background: var(--berry-soft);
+      color: var(--berry);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .modal-abstract {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.72;
+      white-space: pre-wrap;
+    }
+
+    @media (min-width: 700px) {
+      .shell {
+        padding-top: 34px;
+      }
+
+      .section {
+        padding: 26px 24px;
+      }
+
+      .paper-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .modal {
+        align-items: center;
+      }
+
+      .modal-card {
+        max-width: 760px;
+        margin: 0 auto;
+        border-radius: 26px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .time {
+        font-size: 0.82rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero" aria-label="Event overview">
+      <p class="dept">Department of Women's and Gender Studies</p>
+      <h1>WGST Senior Symposium</h1>
+      <p class="hero-copy">
+        A mobile-friendly program featuring the event schedule and the research abstracts of twelve graduating student scholars.
+      </p>
+
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="meta-label">Date</div>
+          <div class="meta-value">Monday, May 4, 2026</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Program</div>
+          <div class="meta-value">Student research presentations followed by the graduation ceremony</div>
+        </div>
+      </div>
+
+      <nav class="jump-links" aria-label="Quick navigation">
+        <a class="jump-primary" href="#schedule">View Schedule</a>
+        <a class="jump-secondary" href="#papers">Browse Abstracts</a>
+      </nav>
+    </section>
+
+    <section class="section" id="schedule" aria-labelledby="schedule-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Event Flow</p>
+          <h2 id="schedule-heading">Schedule</h2>
+        </div>
+        <div class="section-note">The research block opens into a searchable list of all paper abstracts below.</div>
+      </div>
+
+      <div class="timeline">
+        <article class="timeline-card">
+          <div class="time">1:45 PM</div>
+          <div>
+            <h3 class="timeline-title">Welcome</h3>
+          </div>
+        </article>
+
+        <article class="timeline-card">
+          <div class="time">1:50-2:30 PM</div>
+          <div>
+            <h3 class="timeline-title">Presentation of Student Research</h3>
+            <p class="timeline-detail">Tap into the abstracts section to search by student name or paper title.</p>
+          </div>
+        </article>
+
+        <article class="timeline-card">
+          <div class="time">2:30 PM</div>
+          <div>
+            <h3 class="timeline-title">Department Graduation Ceremony</h3>
+          </div>
+        </article>
+
+        <article class="timeline-card">
+          <div class="time">3:00 PM</div>
+          <div>
+            <h3 class="timeline-title">Graduation Toast</h3>
+          </div>
+        </article>
+
+        <article class="timeline-card">
+          <div class="time">3:05 PM</div>
+          <div>
+            <h3 class="timeline-title">Photo of Faculty and Graduates</h3>
+          </div>
+        </article>
+      </div>
+
+    </section>
+
+    <section class="section" id="papers" aria-labelledby="papers-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Research Archive</p>
+          <h2 id="papers-heading">Abstracts</h2>
+        </div>
+        <div class="section-note">Search by student name or title, then tap any card to open the full abstract.</div>
+      </div>
+
+      <div class="search-wrap">
+        <label for="paper-search" class="visually-hidden">Search papers</label>
+        <input
+          id="paper-search"
+          class="search-box"
+          type="search"
+          placeholder="Search by student or title"
+          autocomplete="off"
+        >
+        <div class="search-meta" id="search-meta">Showing all 12 papers.</div>
+      </div>
+
+      <div class="empty-state" id="empty-state">
+        No papers match that search yet. Try a student first name, last name, or a keyword from a title.
+      </div>
+
+      <div class="paper-list" id="paper-list">
+        <button class="paper-card" type="button" data-author="Paris Anderson" data-title="The Violence of Paradise: Tourism, Trafficking, &amp; the Production of Vulnerability in Hawai'i" data-abstract="Though Hawai'i is widely imagined as a pristine paradise that attracts tourists from around the world, this polished appearance obscures the exploitative processes through which Hawai'i's tourism industry both functions and sustains itself. This project analyzes the ways that Hawai'i's tourism industry operates to produce disproportionate vulnerability to trafficking for Native Hawaiian women, examining both the colonial mechanisms at work, as well as the material outcomes that they produce for Native Hawaiian women today. This project engages several conceptual frameworks theorized within existing decolonial feminist scholarship to examine the relationship between tourism and trafficking in Hawai'i. By putting these frameworks in dialogue with sociohistorical, contemporary, and community-based evidence gathered from interviews conducted with local service providers, this essay synthesizes these insights to clarify the role of tourism in producing vulnerability to trafficking for Native Hawaiian women. Understanding this calls attention to the importance of confronting tourism as a systemic driver of gendered and racialized exploitation in Hawai'i.">
+          <span class="paper-author">Paris Anderson</span>
+          <h3 class="paper-title">The Violence of Paradise: Tourism, Trafficking, &amp; the Production of Vulnerability in Hawai'i</h3>
+          <p class="paper-preview">Tourism, colonialism, and the production of vulnerability for Native Hawaiian women.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Zoe Bauer" data-title="Reorientating the Feminine Body: Embodied Possibility in the Lesbian Land Movement" data-abstract="The foundational feminist scholar Iris Marion Young argues that patriarchal social norms constrict how women are able to occupy space. This constraint, however, is situational, meaning that different social conditions could open up new possibilities for feminine embodiment. The lesbian land movement in Southern Oregon during the 1970s and 80s is one of the most sustained feminist efforts to restructure women's social conditions, though it remains understudied and often dismissed because of its association with separatism. This project asks: How do lesbian land communities expand the possibilities for feminine bodies in relation to itself, space, and one another? To explore this, I analyze photographs from the Ruth Mountaingrove archive using a feminist phenomenological approach, focusing on posture, spatial use, gaze, clothing, and framing through Young's framework. The images show that communal living and autonomous conditions allowed bodies to move more freely, take up space collectively, and exist without the constant self-monitoring Young identifies. Most powerfully, they reveal a form of embodiment that extends her framework itself: a body that simply exists without needing to justify its place. Rather than dismissing the movement for its limits, this project holds them alongside its possibilities, arguing that accepting that complexity is exactly where the bodily expansion these lands opened becomes visible.">
+          <span class="paper-author">Zoe Bauer</span>
+          <h3 class="paper-title">Reorientating the Feminine Body: Embodied Possibility in the Lesbian Land Movement</h3>
+          <p class="paper-preview">A feminist phenomenological reading of embodiment, autonomy, and lesbian land communities.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Haley Garrison" data-title="Beyond &quot;Successful Aging&quot;: Intergenerational Storytelling and the Radical Joy of Later Life Amidst Pain and Disability" data-abstract="Throughout life, we all experience moments of pain, disability, and dependence, each unfolding differently; aging, which will come for us all, only deepens them. Though universal and unavoidable, our collective fear of aging is profoundly anchored in our fear of these very things: pain, dependency, the negative body, and death. This project asks how we might reimagine these inevitable parts of the human condition, not to escape them, but to cope with them, value them, and move through life alongside them. To explore this, and to resist the common antipathy of aging and older adults, I listened to my grandmothers' life stories and lived experiences in older age, centering intergenerational storytelling as a way to bridge our worlds, amplify their voices, and critically examine the complexities and joys of later life. Through oral history and auto-theory, my grandmothers and I reflected on their aging as a long, unfolding process, tracing their social, personal, and corporeal experiences of pain, mistreatment, and interpersonal dynamics to understand how they carry on, adapt, and cultivate purpose beyond the body. Using a feminist disability studies lens, my paper builds a reimagining of later life that challenges ableist, patriarchal capitalism's promotion of successful aging, and the ageism it sustains, arguing instead for a multifaceted view of older age that acknowledges all of its ambivalences and radiance, one that does not shy away from disability, decline, or death. Instead, I center the significance of intergenerational connection, arguing that the final phase of life, precisely because of its complex social location, pains, and limitations, is where radical love, peace, joy, resilience, interdependency, and self-formation are forged, and passed down as the true inheritance our elders leave behind.">
+          <span class="paper-author">Haley Garrison</span>
+          <h3 class="paper-title">Beyond "Successful Aging": Intergenerational Storytelling and the Radical Joy of Later Life Amidst Pain and Disability</h3>
+          <p class="paper-preview">Oral history, disability studies, and a reimagining of aging beyond ableist ideals.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Sarah Gutknecht" data-title="Custody Law and the Legal Recognition of Queer Families" data-abstract="Marriage equality is celebrated by LGBTQ+ communities as the moment where they gained legal recognition of queer relationships and families. This thesis examines how custody and parentage law shape legal recognition of queer families after the legalization of same-sex marriage. This thesis explores how legal recognition becomes a site of governance and how queer families remain vulnerable. I argue that marriage equality is just another form of state control over parental legitimacy. Drawing on reproductive justice and queer kinship theory to frame custody law as a mechanism of governance, I analyze three post-Obergefell cases that highlight the unjust treatment of non-biological parents, unmarried partners, and queer parents of color. Custody standards prefer biology, marriage, and normative family forms over care-based kinship. Legal recognition remaining conditional and ultimately up to the state's discretion on a case-to-case basis opens individuals up to a new scale of surveillance.">
+          <span class="paper-author">Sarah Gutknecht</span>
+          <h3 class="paper-title">Custody Law and the Legal Recognition of Queer Families</h3>
+          <p class="paper-preview">How custody and parentage law continue to govern queer family legitimacy after marriage equality.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Elizabeth Li" data-title="Beyond and Between Races: Multiracial Becoming in a Monoracial Society" data-abstract="Most people develop a sense of racial identity within a family system which assumes shared racial experiences. However, people with multiracial identities' experience of racial identity development can be more complex and contested. This thesis investigates race as an identity category and highlights the experiences multiracial individuals encounter while developing a sense of self in a society structured around monoracial categories. Through an examination of three memoirs written by multiracial authors, this study analyzes personal reflections on family, peers, and society from childhood through adulthood. It argues that racial categories are inadequate for understanding identity and that multiracial experiences expose the instability of race as a category for defining people.">
+          <span class="paper-author">Elizabeth Li</span>
+          <h3 class="paper-title">Beyond and Between Races: Multiracial Becoming in a Monoracial Society</h3>
+          <p class="paper-preview">Memoir, family, and the instability of race as a category in monoracial social systems.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Paige Machember" data-title="Cities Are Not Neutral: Gender, Queerness, and the Design of Urban Space" data-abstract="Cities are often treated as neutral, but they are designed for a default user, typically a white, heterosexual, able-bodied man. This creates a gap between how cities are built and how women and queer communities actually move through them. This project examines how design features like lighting, crowding, and layout shape safety and behavior. By combining theory and narrative, it shows that everyday actions, such as changing routes or staying alert, are responses to urban design. It also explores ballroom culture to show how marginalized communities create alternative spaces. Ultimately, it argues that inequality is built into cities but can be reimagined through new forms of space-making.">
+          <span class="paper-author">Paige Machember</span>
+          <h3 class="paper-title">Cities Are Not Neutral: Gender, Queerness, and the Design of Urban Space</h3>
+          <p class="paper-preview">A critique of urban design through gendered movement, safety, and queer space-making.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Sadie Nanson" data-title="Hard-Working Fathers and Blue Bunny Hats: The Exclusionary Metrics of Deservingness and the Radical Response" data-abstract="Within a year of Donald Trump's second presidential term, Immigration and Customs Enforcement (ICE) deported over two million people, sparking outcry from the American public across the ideological spectrum. Pro-immigrant media, from moderate to left leaning outlets, attempts to stand in solidarity with immigrants but frequently profiles those deemed deserving or sympathetic to make its case. Although these narratives purport to advocate for just immigration enforcement and policies, they replicate exclusionary logic by presenting exclusively deserving figures. Deservingness, masquerading as advocacy, reifies systems of power and implicitly categorizes the absent as underserving. This study deploys a critical discourse analysis with feminist and queer theoretical lenses to reveal how systems of power underpin deservingness narratives and produce undesirable others. Radical hospitality serves as an alternative that dissolves categories of belonging altogether and imagines a queer, borderless future devoid of exclusion.">
+          <span class="paper-author">Sadie Nanson</span>
+          <h3 class="paper-title">Hard-Working Fathers and Blue Bunny Hats: The Exclusionary Metrics of Deservingness and the Radical Response</h3>
+          <p class="paper-preview">A critique of deservingness rhetoric in immigration advocacy and a turn toward radical hospitality.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Anya Embiricos" data-title="The United States Mass Incarceration" data-abstract="A burst of 2010s media, including 13th, The New Jim Crow, and Orange is the New Black, as well as the 2020 Black Lives Matter movement in response to the murder of George Floyd, forced a deep questioning of the current prison system in the United States. However, not enough research has identified solutions to the prison system. This paper argues that community-based organizations like Homeboy Industries demonstrate that rehabilitation models rooted in mutual aid are more effective than punitive incarceration at reducing recidivism. Putting empirical data in conversation with scholarship on the benefits of mutual aid, as well as new media that have disproved the effectiveness of the prison system, my research shows that reform is not a solution, but community-based organizations are. This research is urgent and relevant because it not only analyzes the problems of the prison system but also proves the inability of this system to meet its goals and uniquely offers real-world solutions.">
+          <span class="paper-author">Anya Embiricos</span>
+          <h3 class="paper-title">The United States Mass Incarceration</h3>
+          <p class="paper-preview">An argument for mutual-aid-based rehabilitation over punitive incarceration.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Samantha Qualls" data-title="Gold Stars, Hey Mamas, and Pillow Princesses: Exploring the Mechanisms of Lesbian Identity Formation on Social Media" data-abstract="The process of identity formation is not neutral, especially when it comes to defining what counts as lesbian in online spaces. While existing research examines lesbian identity more broadly, less attention has been given to how coloniality informs this identity on social media. This study explores how lesbian identity is constructed and how its boundaries are maintained on platforms like TikTok and Instagram. Using qualitative digital ethnography, I analyze three case studies of lesbian content creators through discourse and media analysis, focusing on on-screen text, audio, engagement patterns, and visual aesthetics. The findings show that lesbian creators who employ themes like purity, respectability, and soft power in their content tend to gain more visibility and mainstream success, while those who do not face criticism or lower engagement. Overall, these results suggest that social media often rewards a creator's adherence to traditional expressions of sexuality. This project helps to better understand how social media can shape sexual identity and makes clear the harms of certain traditional sexual values, like purity.">
+          <span class="paper-author">Samantha Qualls</span>
+          <h3 class="paper-title">Gold Stars, Hey Mamas, and Pillow Princesses: Exploring the Mechanisms of Lesbian Identity Formation on Social Media</h3>
+          <p class="paper-preview">Digital ethnography on lesbian identity, visibility, and colonial respectability politics online.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Genevieve Von Manti" data-title="The Lasting Effects of the 2009 film Taken on the Media Depiction of Human Trafficking Victims" data-abstract="What do you think of when you hear the term human trafficking if you have never met a real-life victim? How has the successful 2009 film Taken solidified the perfect victim trope in the universal perception of trafficking as a concept? Why does the ideology of trafficking center a white, conventionally attractive, young girl, and how does that further perpetuate a restrictive and infantilizing view of female victims? The research I have done regarding the long-lasting impacts of Taken (2009) supports the claim that the movie is responsible for the ongoing idea of perfect victimhood in human trafficking depictions, as well as created the template for human trafficking tropes in media to this day. Perfect victim media prioritization was not invented by Taken (2009) but enhanced by it. The film was one of the first to use the term human trafficking in mainstream American media, making it the blueprint for later trafficking-centered content.">
+          <span class="paper-author">Genevieve Von Manti</span>
+          <h3 class="paper-title">The Lasting Effects of the 2009 film Taken on the Media Depiction of Human Trafficking Victims</h3>
+          <p class="paper-preview">How Taken shaped the perfect victim trope in mainstream trafficking narratives.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Azza Bellan" data-title="Stylizing Identity: Communal Care and Black Queer Identity in Pose" data-abstract="How does fashion operate as more than just self-expression for Black queer communities? This thesis interrogates the overlooked role of fashion as both psychological resistance and archival practice, focusing on the TV series Pose and its depiction of the 1980s ballroom scene. The project addresses the problem of how Black queer and trans identities are rendered invisible or misrecognized by institutional forces, especially in moments of loss or death, as illustrated by the character Candy's funeral. Drawing on Black feminist thought, queer methodology, media studies, and fashion psychology, this work analyzes the pivotal scene in the season 2 episode 4 episode Never Knew Love Like This Before, written and directed by Ryan Murphy and Janet Mock, in which Candy's friends reclaim her identity through the restorative act of restyling her body. This approach reveals that fashion and beauty practices are not superficial, but vital forms of communal care and memory work. The purpose is to show that identity is relational and maintained through shared practices rather than institutional standards. From this project, we gain a deeper understanding of how the Black queer community has historically used fashion to resist erasure, sustain recognition, and author their own histories in the face of continuous structural exclusion.">
+          <span class="paper-author">Azza Bellan</span>
+          <h3 class="paper-title">Stylizing Identity: Communal Care and Black Queer Identity in Pose</h3>
+          <p class="paper-preview">Fashion as resistance, memory work, and communal care in Black queer identity formation.</p>
+        </button>
+
+        <button class="paper-card" type="button" data-author="Lily Li-Li Wong" data-title="The Sexed Body of Queer People of Color (QPOC)" data-abstract="To exist in the world is to be perceived, but what are the consequences of such perception on an individual's public and private life? This study centers the lived experiences of queer people of color (QPOC) to understand how their public experiences of racialization, sexualization, and racialized sexualization shape private experiences of intimacy and their inner sense of self. For marginalized communities, these experiences do not exist in isolation. Rather, they can reveal the reality of a world structured through interlocking oppressions. The knowledge and experiences of queer people of color ground this research to investigate the consequences of living in a racialized, sexed body in America in the 20th century and the radical potential that queer may offer in the face of such oppression.">
+          <span class="paper-author">Lily Li-Li Wong</span>
+          <h3 class="paper-title">The Sexed Body of Queer People of Color (QPOC)</h3>
+          <p class="paper-preview">An inquiry into racialized sexualization, intimacy, and queer possibility for QPOC.</p>
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <div class="modal" id="abstract-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-top">
+        <div>
+          <p class="modal-kicker">Student Paper</p>
+          <h3 id="modal-title"></h3>
+          <div class="modal-author" id="modal-author"></div>
+        </div>
+        <button class="close-btn" type="button" id="close-modal" aria-label="Close abstract">&times;</button>
+      </div>
+      <div class="modal-abstract" id="modal-abstract"></div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById("paper-search");
+    const paperCards = Array.from(document.querySelectorAll(".paper-card"));
+    const searchMeta = document.getElementById("search-meta");
+    const emptyState = document.getElementById("empty-state");
+
+    const modal = document.getElementById("abstract-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalAuthor = document.getElementById("modal-author");
+    const modalAbstract = document.getElementById("modal-abstract");
+    const closeModalButton = document.getElementById("close-modal");
+
+    const totalPapers = paperCards.length;
+    let lastFocusedCard = null;
+
+    function updateSearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      paperCards.forEach((card) => {
+        const haystack = `${card.dataset.author} ${card.dataset.title}`.toLowerCase();
+        const matches = haystack.includes(query);
+        card.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      emptyState.style.display = visibleCount === 0 ? "block" : "none";
+      searchMeta.textContent = query
+        ? `Showing ${visibleCount} of ${totalPapers} papers for "${searchInput.value.trim()}".`
+        : `Showing all ${totalPapers} papers.`;
+    }
+
+    function openModal(card) {
+      lastFocusedCard = card;
+      modalTitle.textContent = card.dataset.title;
+      modalAuthor.textContent = card.dataset.author;
+      modalAbstract.textContent = card.dataset.abstract;
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      closeModalButton.focus();
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = "";
+      if (lastFocusedCard) lastFocusedCard.focus();
+    }
+
+    paperCards.forEach((card) => {
+      card.addEventListener("click", () => openModal(card));
+    });
+
+    searchInput.addEventListener("input", updateSearch);
+    closeModalButton.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) {
+        closeModal();
+      }
+    });
+
+    updateSearch();
+  </script>
+</body>
+</html>
