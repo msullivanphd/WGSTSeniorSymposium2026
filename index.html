@@ -102,14 +102,6 @@
       letter-spacing: -0.04em;
     }
 
-    .hero-copy {
-      margin: 16px 0 0;
-      font-size: 1rem;
-      line-height: 1.6;
-      max-width: 34rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
     .meta-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -144,32 +136,31 @@
       color: white;
     }
 
-    .jump-links {
+    .tabs {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       margin: 18px 0 0;
+      position: relative;
+      z-index: 1;
     }
 
-    .jump-links a {
+    .tab-button {
+      flex: 1;
       font-family: "Helvetica Neue", Arial, sans-serif;
-      text-decoration: none;
       font-size: 0.95rem;
       font-weight: 700;
-      padding: 11px 16px;
+      padding: 11px 14px;
       border-radius: 999px;
-      transition: transform 0.18s ease, background 0.18s ease;
-    }
-
-    .jump-primary {
-      background: white;
-      color: var(--berry);
-    }
-
-    .jump-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.13);
       color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .tab-button.active {
+      background: white;
+      color: var(--berry);
     }
 
     .section {
@@ -179,6 +170,14 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
       padding: 22px 18px;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
     }
 
     .section-header {
@@ -359,6 +358,44 @@
       line-height: 1.55;
     }
 
+    .graduates-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .graduate-group {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 253, 251, 0.96));
+      padding: 16px;
+    }
+
+    .graduate-group h3 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      line-height: 1.2;
+      color: var(--berry);
+    }
+
+    .graduate-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .graduate-item {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.97rem;
+      line-height: 1.45;
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(0, 118, 165, 0.06);
+      border: 1px solid rgba(0, 118, 165, 0.08);
+    }
+
     .modal[hidden] {
       display: none;
     }
@@ -448,6 +485,14 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .graduates-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .graduate-group:first-child {
+        grid-column: 1 / -1;
+      }
+
       .modal {
         align-items: center;
       }
@@ -462,6 +507,10 @@
     @media (max-width: 540px) {
       .meta-grid {
         grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        flex-direction: column;
       }
 
       .timeline-card {
@@ -480,9 +529,6 @@
     <section class="hero" aria-label="Event overview">
       <p class="dept">Department of Women's and Gender Studies</p>
       <h1>WGST Senior Symposium</h1>
-      <p class="hero-copy">
-        A mobile-friendly program featuring the event schedule and the research abstracts of twelve graduating student scholars.
-      </p>
 
       <div class="meta-grid">
         <div class="meta-card">
@@ -495,13 +541,14 @@
         </div>
       </div>
 
-      <nav class="jump-links" aria-label="Quick navigation">
-        <a class="jump-primary" href="#schedule">View Schedule</a>
-        <a class="jump-secondary" href="#papers">Browse Abstracts</a>
+      <nav class="tabs" aria-label="Program sections">
+        <button class="tab-button active" type="button" data-tab="schedule">Agenda</button>
+        <button class="tab-button" type="button" data-tab="papers">Abstracts</button>
+        <button class="tab-button" type="button" data-tab="graduates">Graduates</button>
       </nav>
     </section>
 
-    <section class="section" id="schedule" aria-labelledby="schedule-heading">
+    <section class="section panel active" id="schedule" aria-labelledby="schedule-heading">
       <div class="section-header">
         <div>
           <p class="eyebrow">Event Flow</p>
@@ -550,7 +597,7 @@
 
     </section>
 
-    <section class="section" id="papers" aria-labelledby="papers-heading">
+    <section class="section panel" id="papers" aria-labelledby="papers-heading">
       <div class="section-header">
         <div>
           <p class="eyebrow">Research Archive</p>
@@ -588,9 +635,9 @@
           <p class="paper-preview">A feminist phenomenological reading of embodiment, autonomy, and lesbian land communities.</p>
         </button>
 
-        <button class="paper-card" type="button" data-author="Haley Garrison" data-title="Beyond &quot;Successful Aging&quot;: Intergenerational Storytelling and the Radical Joy of Later Life Amidst Pain and Disability" data-abstract="Throughout life, we all experience moments of pain, disability, and dependence, each unfolding differently; aging, which will come for us all, only deepens them. Though universal and unavoidable, our collective fear of aging is profoundly anchored in our fear of these very things: pain, dependency, the negative body, and death. This project asks how we might reimagine these inevitable parts of the human condition, not to escape them, but to cope with them, value them, and move through life alongside them. To explore this, and to resist the common antipathy of aging and older adults, I listened to my grandmothers' life stories and lived experiences in older age, centering intergenerational storytelling as a way to bridge our worlds, amplify their voices, and critically examine the complexities and joys of later life. Through oral history and auto-theory, my grandmothers and I reflected on their aging as a long, unfolding process, tracing their social, personal, and corporeal experiences of pain, mistreatment, and interpersonal dynamics to understand how they carry on, adapt, and cultivate purpose beyond the body. Using a feminist disability studies lens, my paper builds a reimagining of later life that challenges ableist, patriarchal capitalism's promotion of successful aging, and the ageism it sustains, arguing instead for a multifaceted view of older age that acknowledges all of its ambivalences and radiance, one that does not shy away from disability, decline, or death. Instead, I center the significance of intergenerational connection, arguing that the final phase of life, precisely because of its complex social location, pains, and limitations, is where radical love, peace, joy, resilience, interdependency, and self-formation are forged, and passed down as the true inheritance our elders leave behind.">
+        <button class="paper-card" type="button" data-author="Haley Garrison" data-title="Beyond &quot;Successful Aging&quot;: Intergenerational Storytelling and Radical Love in Later Life Amidst Pain and Disability" data-abstract="Throughout life, we all experience moments of pain, disability, and dependence, each unfolding differently; aging, which will come for us all, only deepens them. Though universal and unavoidable, our collective fear of aging is profoundly anchored in our fear of these very things: pain, dependency, the negative body, and death. This project asks how we might reimagine these inevitable parts of the human condition, not to escape them, but to cope with them, value them, and move through life alongside them. To explore this, and to resist the common antipathy of aging and older adults, I listened to my grandmothers' life stories and lived experiences in older age, centering intergenerational storytelling as a way to bridge our worlds, amplify their voices, and critically examine the complexities and joys of later life. Through oral history and auto-theory, my grandmothers and I reflected on their aging as a long, unfolding process, tracing their social, personal, and corporeal experiences of pain, mistreatment, and interpersonal dynamics to understand how they carry on, adapt, and cultivate purpose beyond the body. Using a feminist disability studies lens, my paper builds a reimagining of later life that challenges ableist, patriarchal capitalism's promotion of successful aging, and the ageism it sustains, arguing instead for a multifaceted view of older age that acknowledges all of its ambivalences and radiance, one that does not shy away from disability, decline, or death. Instead, I center the significance of intergenerational connection, arguing that the final phase of life, precisely because of its complex social location, pains, and limitations, is where radical love, peace, joy, resilience, interdependency, and self-formation are forged, and passed down as the true inheritance our elders leave behind.">
           <span class="paper-author">Haley Garrison</span>
-          <h3 class="paper-title">Beyond "Successful Aging": Intergenerational Storytelling and the Radical Joy of Later Life Amidst Pain and Disability</h3>
+          <h3 class="paper-title">Beyond “Successful Aging”: Intergenerational Storytelling and Radical Love in Later Life Amidst Pain and Disability</h3>
           <p class="paper-preview">Oral history, disability studies, and a reimagining of aging beyond ableist ideals.</p>
         </button>
 
@@ -650,6 +697,78 @@
       </div>
 
     </section>
+
+    <section class="section panel" id="graduates" aria-labelledby="graduates-heading">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Class of 2026</p>
+          <h2 id="graduates-heading">Graduates</h2>
+        </div>
+        <div class="section-note">Graduating students across WGST majors, WGST minors, and DSTD minors.</div>
+      </div>
+
+      <div class="graduates-grid">
+        <article class="graduate-group">
+          <h3>WGST Majors</h3>
+          <ul class="graduate-list">
+            <li class="graduate-item">Sadie Nanson</li>
+            <li class="graduate-item">Haley Garrison</li>
+            <li class="graduate-item">Zoe Bauer</li>
+            <li class="graduate-item">Lily Wong</li>
+            <li class="graduate-item">Sarah Gutknecht</li>
+            <li class="graduate-item">Genevieve Von Manti</li>
+            <li class="graduate-item">Elizabeth Li</li>
+            <li class="graduate-item">Azza Bellan White</li>
+            <li class="graduate-item">Paris Anderson</li>
+            <li class="graduate-item">Anya Palevsky Embiricos</li>
+            <li class="graduate-item">Samantha Qualls</li>
+            <li class="graduate-item">Paige Machemer</li>
+            <li class="graduate-item">Summer Castagna</li>
+          </ul>
+        </article>
+
+        <article class="graduate-group">
+          <h3>WGST Minors</h3>
+          <ul class="graduate-list">
+            <li class="graduate-item">Quinn Sullivan</li>
+            <li class="graduate-item">Mia Gresh</li>
+            <li class="graduate-item">Isabel Lawrence</li>
+            <li class="graduate-item">Yasmin Kim</li>
+            <li class="graduate-item">Madilynne Rote</li>
+            <li class="graduate-item">Katherine Gaylord</li>
+            <li class="graduate-item">Dana Christensen-Levy</li>
+            <li class="graduate-item">Isabella Fernando</li>
+            <li class="graduate-item">Isabella Chacon</li>
+            <li class="graduate-item">Dakota Threats</li>
+            <li class="graduate-item">Sofia Frazer</li>
+            <li class="graduate-item">Brooke Schatz</li>
+            <li class="graduate-item">Claire Gross</li>
+            <li class="graduate-item">Gabrielle McGlone</li>
+            <li class="graduate-item">Frida Manubens</li>
+            <li class="graduate-item">Harriet Sander</li>
+            <li class="graduate-item">Maxine Ostella</li>
+            <li class="graduate-item">Amani Rivers</li>
+            <li class="graduate-item">Xuchen Ouyang</li>
+            <li class="graduate-item">Mia Rumsfeld</li>
+            <li class="graduate-item">Victoria Popel</li>
+            <li class="graduate-item">Isabelle Caipo</li>
+            <li class="graduate-item">Olivia Tiano</li>
+            <li class="graduate-item">Amelia Fox</li>
+            <li class="graduate-item">Theresa Kim</li>
+            <li class="graduate-item">Ilona Gibier</li>
+          </ul>
+        </article>
+
+        <article class="graduate-group">
+          <h3>DSTD Minors</h3>
+          <ul class="graduate-list">
+            <li class="graduate-item">Brooke Schatz</li>
+            <li class="graduate-item">Harriet Sander</li>
+            <li class="graduate-item">Azza White</li>
+          </ul>
+        </article>
+      </div>
+    </section>
   </main>
 
   <div class="modal" id="abstract-modal" hidden>
@@ -667,6 +786,8 @@
   </div>
 
   <script>
+    const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
+    const panels = Array.from(document.querySelectorAll(".panel"));
     const searchInput = document.getElementById("paper-search");
     const paperCards = Array.from(document.querySelectorAll(".paper-card"));
     const searchMeta = document.getElementById("search-meta");
@@ -680,6 +801,16 @@
 
     const totalPapers = paperCards.length;
     let lastFocusedCard = null;
+
+    function setActiveTab(tabId) {
+      tabButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.tab === tabId);
+      });
+
+      panels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === tabId);
+      });
+    }
 
     function updateSearch() {
       const query = searchInput.value.trim().toLowerCase();
@@ -716,6 +847,10 @@
 
     paperCards.forEach((card) => {
       card.addEventListener("click", () => openModal(card));
+    });
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => setActiveTab(button.dataset.tab));
     });
 
     searchInput.addEventListener("input", updateSearch);
